@@ -4,7 +4,7 @@ class Calculator:
     def __init__(self,master):
         master.title("Calculadora")
         master.geometry("457x535+0+0")
-        master.resizable(True, True)
+        master.resizable(False, False)
         master.config(bg='gray')
 
         self.equation = StringVar()
