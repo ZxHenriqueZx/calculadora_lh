@@ -1,3 +1,2 @@
 # calculadora_lh
-Um pequeno projeto para estudo da biblioteca tkinter, e o uso de classes na programação.
-
+Projeto calculadora em Python, usando a biblioteca PySide6, do curso de <a href="https://www.udemy.com/course/python-3-do-zero-ao-avancado/">Python do Otávio Miranda</a> 
