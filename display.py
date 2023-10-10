@@ -9,7 +9,7 @@ class Display(QLineEdit):
 
     def config_size(self):
         margins = [TEXT_MARGIN for i in range(4)]
-        self.setStyleSheet(f'font-size: {MAX_SIZE}px')
+        self.setStyleSheet(f'font-size: {MAX_SIZE}px;')
         self.setMinimumHeight(MAX_SIZE * 2)
         self.setMinimumWidth(MIN_WIDTH)
         self.setAlignment(Qt.AlignmentFlag.AlignRight)
