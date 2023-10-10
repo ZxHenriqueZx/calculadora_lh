@@ -5,6 +5,7 @@ from display import Display
 from variables import ICON_PATH
 from info import Info
 from theme import setup_theme_app
+from buttons import Button
 
 
 if __name__ == '__main__':
@@ -28,6 +29,10 @@ if __name__ == '__main__':
     #display
     my_display = Display()
     window.add_widget_to_layout(my_display)
+
+    #Button
+    my_button = Button('TESTE')
+    window.add_widget_to_layout(my_button)
 
     #Exexuta a aplicação
     window.size_fixed()
