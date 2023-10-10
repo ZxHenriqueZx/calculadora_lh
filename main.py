@@ -4,11 +4,13 @@ from main_window import MyWindow
 from display import Display
 from variables import ICON_PATH
 from info import Info
+from theme import setup_theme_app
 
 
 if __name__ == '__main__':
     #Cria a Aplicação
     app = QApplication()
+    setup_theme_app()
     window = MyWindow()
 
     #Nome da Aplicação
