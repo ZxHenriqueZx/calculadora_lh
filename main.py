@@ -35,14 +35,6 @@ if __name__ == '__main__':
     window.vertical_layout.addLayout(grid_buttons)
 
     #Button
-    grid_buttons.addWidget(Button('1'), 0, 0)
-    grid_buttons.addWidget(Button('2'), 0, 1)
-    grid_buttons.addWidget(Button('3'), 0, 2)
-    grid_buttons.addWidget(Button('4'), 0, 3)
-    grid_buttons.addWidget(Button('5'), 1, 0)
-    grid_buttons.addWidget(Button('6'), 1, 1)
-    grid_buttons.addWidget(Button('7'), 1, 2)
-    grid_buttons.addWidget(Button('8'), 1, 3)
 
     #Exexuta a aplicação
     window.size_fixed()
