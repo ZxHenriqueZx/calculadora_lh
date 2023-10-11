@@ -5,7 +5,7 @@ from display import Display
 from variables import ICON_PATH
 from info import Info
 from theme import setup_theme_app
-from buttons import Button
+from buttons import Button, GridButtons
 
 
 if __name__ == '__main__':
@@ -30,9 +30,19 @@ if __name__ == '__main__':
     my_display = Display()
     window.add_widget_to_layout(my_display)
 
+    #Grid
+    grid_buttons = GridButtons()
+    window.vertical_layout.addLayout(grid_buttons)
+
     #Button
-    my_button = Button('TESTE')
-    window.add_widget_to_layout(my_button)
+    grid_buttons.addWidget(Button('1'), 0, 0)
+    grid_buttons.addWidget(Button('2'), 0, 1)
+    grid_buttons.addWidget(Button('3'), 0, 2)
+    grid_buttons.addWidget(Button('4'), 0, 3)
+    grid_buttons.addWidget(Button('5'), 1, 0)
+    grid_buttons.addWidget(Button('6'), 1, 1)
+    grid_buttons.addWidget(Button('7'), 1, 2)
+    grid_buttons.addWidget(Button('8'), 1, 3)
 
     #Exexuta a aplicação
     window.size_fixed()
