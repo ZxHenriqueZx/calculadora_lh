@@ -1,4 +1,5 @@
 from PySide6.QtWidgets import QPushButton, QGridLayout
+from PySide6.QtCore import Slot
 from variables import MID_SIZE, MAX_SIZE, MIN_SIZE
 
 
@@ -14,7 +15,7 @@ class Button(QPushButton):
         self.setMinimumSize(75,75)
 
 class GridButtons(QGridLayout):
-    def __init__(self, *args, **kwargs):
+    def __init__(self, display,  *args, **kwargs):
         super().__init__(*args, **kwargs)
 
         self._grid_cal = [
@@ -26,6 +27,7 @@ class GridButtons(QGridLayout):
         ]
 
         self._make_grid()
+        self.display = display
 
     def _make_grid(self):
         for i, row in enumerate(self._grid_cal):
@@ -39,3 +41,17 @@ class GridButtons(QGridLayout):
                     button.setFont(font)
 
                 self.addWidget(button, i, j)
+                button_slot = self._make_display_slot(self._insert_text, button)
+                button.clicked.connect(button_slot)
+
+    def _make_display_slot(self, func, *args, **kwargs):
+        @Slot()
+        def real_slot(_):
+            func(*args, **kwargs)
+        return real_slot
+
+
+    def _insert_text(self, button):
+        button_text = button.text()
+        self.display.insert(button_text)
+
