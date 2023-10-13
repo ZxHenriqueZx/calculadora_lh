@@ -27,10 +27,10 @@ class GridButtons(QGridLayout):
             ['0', '.', '⌫', '='],
         ]
 
-        self._make_grid()
         self._equation = ''
         self.display = display
         self.info = info
+        self._make_grid()
 
     @property
     def equation(self):
@@ -48,15 +48,26 @@ class GridButtons(QGridLayout):
 
                 if button_text not in '0123456789.':
                     button.setProperty('cssClass', 'specialButton')
-                    font = button.font()
-                    font.setPixelSize(30)
-                    button.setFont(font)
+                    self._config_special_button(button)
+
 
                 self.addWidget(button, i, j)
-                button_slot = self._make_display_slot(self._insert_text, button)
-                button.clicked.connect(button_slot)
+                button_slot = self._make_slot(self._insert_text, button)
+                self._connect_button_clicked(button, button_slot)
 
-    def _make_display_slot(self, func, *args, **kwargs):
+    def _config_special_button(self, button):
+        text = button.text()
+        font = button.font()
+        font.setPixelSize(30)
+        button.setFont(font)
+
+        if text == 'C':
+            self._connect_button_clicked(button, self._clear)
+
+    def _connect_button_clicked(self, button, slot):
+        button.clicked.connect(slot)
+
+    def _make_slot(self, func, *args, **kwargs):
         @Slot()
         def real_slot(_):
             func(*args, **kwargs)
@@ -72,3 +83,5 @@ class GridButtons(QGridLayout):
 
         self.display.insert(button_text)
 
+    def _clear(self):
+        self.display.clear()
