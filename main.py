@@ -31,7 +31,7 @@ if __name__ == '__main__':
     window.add_widget_to_layout(my_display)
 
     #Grid
-    grid_buttons = GridButtons(my_display)
+    grid_buttons = GridButtons(my_display, my_info)
     window.vertical_layout.addLayout(grid_buttons)
 
     #Button

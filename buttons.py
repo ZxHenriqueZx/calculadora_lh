@@ -16,7 +16,7 @@ class Button(QPushButton):
         self.setMinimumSize(75,75)
 
 class GridButtons(QGridLayout):
-    def __init__(self, display,  *args, **kwargs):
+    def __init__(self, display, info,  *args, **kwargs):
         super().__init__(*args, **kwargs)
 
         self._grid_cal = [
@@ -28,7 +28,18 @@ class GridButtons(QGridLayout):
         ]
 
         self._make_grid()
+        self._equation = ''
         self.display = display
+        self.info = info
+
+    @property
+    def equation(self):
+        return self._equation
+
+    @equation.setter
+    def equation(self, value):
+        self._equation = value
+        self.info.setText(value)
 
     def _make_grid(self):
         for i, row in enumerate(self._grid_cal):
