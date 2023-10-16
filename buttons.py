@@ -17,7 +17,7 @@ class Button(QPushButton):
         self.setMinimumSize(75,75)
 
 class GridButtons(QGridLayout):
-    def __init__(self, display, info,  *args, **kwargs):
+    def __init__(self, display, info, window, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
         self._grid_cal = [
@@ -30,6 +30,7 @@ class GridButtons(QGridLayout):
 
         self._equation = ''
         self.display = display
+        self.window = window
         self.info = info
         self._left= None
         self._right = None
@@ -112,7 +113,7 @@ class GridButtons(QGridLayout):
         self.display.clear()
 
         if not is_valid_number(display_text) and self._left is None:
-            print('Não a nada a Fazer')
+            self._show_error('Digite o primeiro numero da operação')
             return
 
         if self._left is None:
@@ -125,7 +126,7 @@ class GridButtons(QGridLayout):
         display_text = self.display.text()
         
         if not is_valid_number(display_text):
-            print('Não a nada a fazer')
+            self._show_error('Não a conta a Fazer!') 
             return
 
         self._rigth = float(display_text)
@@ -138,13 +139,20 @@ class GridButtons(QGridLayout):
             else:
                 result = eval(self.equation)
         except ZeroDivisionError:
-            print('Não é possível dividir por zero')
+            self._show_error('Não é possivel dividir por zero')
+            self._clear()
         except OverflowError:
             result = 'error'
-            print('Numero muito grande!!')
+            self._show_error('Esta conta excede o limite permitido!')
 
         self.display.clear()
         self.info.setText(f'{self.equation} = {result}')
         self._left = result
         self._right = None
+
+    def _show_error(self, msg):
+        msg_box = self.window._make_msg_box()
+        msg_box.setText(msg)
+        msg_box.setIcon(msg_box.Icon.Warning)
+        msg_box.exec()
 
