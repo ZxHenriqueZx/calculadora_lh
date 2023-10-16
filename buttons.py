@@ -144,3 +144,4 @@ class GridButtons(QGridLayout):
         self.info.setText(f'{self.equation} = {result}')
         self._left = result
         self._right = None
+
