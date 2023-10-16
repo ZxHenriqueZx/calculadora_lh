@@ -23,7 +23,7 @@ if __name__ == '__main__':
     app.setWindowIcon(icon)
 
     #Info
-    my_info = Info('TESTE')
+    my_info = Info('X ? X = X')
     window.add_widget_to_layout(my_info)
 
     #display

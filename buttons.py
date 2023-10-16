@@ -30,6 +30,9 @@ class GridButtons(QGridLayout):
         self._equation = ''
         self.display = display
         self.info = info
+        self._left= None
+        self._right = None
+        self._op = None
         self._make_grid()
 
     @property
@@ -64,6 +67,12 @@ class GridButtons(QGridLayout):
         if text == 'C':
             self._connect_button_clicked(button, self._clear)
 
+        if text in '+-x/':
+            self._connect_button_clicked(
+                button,
+                self._make_slot(self._operator_clicked, button)
+            )
+        
     def _connect_button_clicked(self, button, slot):
         button.clicked.connect(slot)
 
@@ -84,4 +93,23 @@ class GridButtons(QGridLayout):
         self.display.insert(button_text)
 
     def _clear(self):
+        self._left = None
+        self._rigth = None
+        self._op = None
+        self.equation = 'X ? X = X'
         self.display.clear()
+
+    def _operator_clicked(self, button):
+        button_text = button.text()
+        display_text = self.display.text()
+        self.display.clear()
+
+        if not is_valid_number(display_text) and self._left is None:
+            print('Não a nada a Fazer')
+            return
+
+        if self._left is None:
+            self._left = float(display_text)
+
+        self._op = button_text
+        self.equation = f'{self._left} {self._op} INSERT'
