@@ -21,7 +21,7 @@ class GridButtons(QGridLayout):
 
         self._grid_cal = [
             ['C', '^', '/', '🐍'],
-            ['7', '8', '9', 'x'],
+            ['7', '8', '9', '*'],
             ['4', '5', '6', '-'],
             ['1', '2', '3', '+'],
             ['0', '.', '⌫', '='],
@@ -67,11 +67,14 @@ class GridButtons(QGridLayout):
         if text == 'C':
             self._connect_button_clicked(button, self._clear)
 
-        if text in '+-x/':
+        if text in '+-*/':
             self._connect_button_clicked(
                 button,
                 self._make_slot(self._operator_clicked, button)
             )
+
+        if text == '=':
+            self._connect_button_clicked(button, self._equal)
         
     def _connect_button_clicked(self, button, slot):
         button.clicked.connect(slot)
@@ -113,3 +116,24 @@ class GridButtons(QGridLayout):
 
         self._op = button_text
         self.equation = f'{self._left} {self._op} INSERT'
+
+    def _equal(self):
+        display_text = self.display.text()
+        
+        if not is_valid_number(display_text):
+            print('Não a nada a fazer')
+            return
+
+        self._rigth = float(display_text)
+        self.equation = f'{self._left} {self._op} {self._rigth}'
+        result = 0.0
+
+        try:
+            result = eval(self.equation)
+        except ZeroDivisionError:
+            print('Não é possível dividir por zero')
+
+        self.display.clear()
+        self.info.setText(f'{self.equation} = {result}')
+        self._left = result
+        self._right = None
