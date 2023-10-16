@@ -1,3 +1,4 @@
+import math
 from PySide6.QtWidgets import QPushButton, QGridLayout
 from PySide6.QtCore import Slot
 from variables import MID_SIZE, MAX_SIZE, MIN_SIZE
@@ -67,7 +68,7 @@ class GridButtons(QGridLayout):
         if text == 'C':
             self._connect_button_clicked(button, self._clear)
 
-        if text in '+-*/':
+        if text in '+-*/^':
             self._connect_button_clicked(
                 button,
                 self._make_slot(self._operator_clicked, button)
@@ -129,9 +130,15 @@ class GridButtons(QGridLayout):
         result = 0.0
 
         try:
-            result = eval(self.equation)
+            if self._op == '^':
+                result = math.pow(self._left, self._rigth)
+            else:
+                result = eval(self.equation)
         except ZeroDivisionError:
             print('Não é possível dividir por zero')
+        except OverflowError:
+            result = 'error'
+            print('Numero muito grande!!')
 
         self.display.clear()
         self.info.setText(f'{self.equation} = {result}')
