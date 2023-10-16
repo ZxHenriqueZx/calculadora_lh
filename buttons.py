@@ -68,6 +68,9 @@ class GridButtons(QGridLayout):
         if text == 'C':
             self._connect_button_clicked(button, self._clear)
 
+        if text == '⌫':
+            self._connect_button_clicked(button, self.display.backspace)
+
         if text in '+-*/^':
             self._connect_button_clicked(
                 button,
