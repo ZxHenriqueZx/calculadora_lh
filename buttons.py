@@ -47,7 +47,7 @@ class GridButtons(QGridLayout):
         self.info.setText(value)
 
     def _make_grid(self):
-        self.display.enter_signal.connect(lambda: print('enter preciondado'))
+        self.display.enter_signal.connect(lambda: print('enter'))
         self.display.backspace_signal.connect(self.display.backspace)
         self.display.esc_signal.connect(lambda: print('esc'))
 
