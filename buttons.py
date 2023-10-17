@@ -47,7 +47,7 @@ class GridButtons(QGridLayout):
         self.info.setText(value)
 
     def _make_grid(self):
-        self.display.enter_signal.connect(lambda: ...)
+        self.display.enter_signal.connect(self._equal)
         self.display.backspace_signal.connect(self.display.backspace)
         self.display.esc_signal.connect(self._clear)
         self.display.number_signal.connect(lambda: print('number'))
@@ -108,7 +108,7 @@ class GridButtons(QGridLayout):
 
     def _clear(self):
         self._left = None
-        self._rigth = None
+        self._right = None
         self._op = None
         self.equation = 'X ? X = X'
         self.display.clear()
@@ -131,12 +131,12 @@ class GridButtons(QGridLayout):
     def _equal(self):
         display_text = self.display.text()
         
-        if not is_valid_number(display_text):
+        if not is_valid_number(display_text) or self._left is None:
             self._show_error('Não a conta a Fazer!') 
             return
 
-        self._rigth = float(display_text)
-        self.equation = f'{self._left} {self._op} {self._rigth}'
+        self._right = float(display_text)
+        self.equation = f'{self._left} {self._op} {self._right}'
         result = 0.0
 
         try:
