@@ -32,7 +32,7 @@ class GridButtons(QGridLayout):
         self.display = display
         self.window = window
         self.info = info
-        self._left= None
+        self._left = None
         self._right = None
         self._op = None
         self._make_grid()
@@ -50,6 +50,7 @@ class GridButtons(QGridLayout):
         self.display.enter_signal.connect(lambda: print('enter'))
         self.display.backspace_signal.connect(self.display.backspace)
         self.display.esc_signal.connect(lambda: print('esc'))
+        self.display.number_signal.connect(lambda: print('number'))
 
         for i, row in enumerate(self._grid_cal):
             for j, button_text in enumerate(row):

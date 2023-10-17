@@ -1,11 +1,13 @@
 from PySide6.QtWidgets import QLineEdit
 from PySide6.QtCore import Qt, Signal
 from variables import MAX_SIZE, TEXT_MARGIN, MIN_WIDTH, MID_SIZE
+from utils import is_empyt, is_num_or_dot
 
 class Display(QLineEdit):
     enter_signal = Signal()
     backspace_signal = Signal()
     esc_signal = Signal()
+    number_signal = Signal()
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -20,6 +22,7 @@ class Display(QLineEdit):
         self.setTextMargins(*margins)
 
     def keyPressEvent(self, event):
+        text = event.text().strip()
         key = event.key()
         KEYS = Qt.Key
         
@@ -38,3 +41,12 @@ class Display(QLineEdit):
         if is_esc:
             self.esc_signal.emit()
             return event.ignore()
+
+        if is_empyt(text):
+            return event.ignore()
+
+        if is_num_or_dot(text):
+            self.number_signal.emit()
+            print(text)
+            return event.ignore()
+
