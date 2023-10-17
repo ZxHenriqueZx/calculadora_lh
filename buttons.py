@@ -47,10 +47,11 @@ class GridButtons(QGridLayout):
         self.info.setText(value)
 
     def _make_grid(self):
-        self.display.enter_signal.connect(lambda: print('enter'))
+        self.display.enter_signal.connect(lambda: ...)
         self.display.backspace_signal.connect(self.display.backspace)
-        self.display.esc_signal.connect(lambda: print('esc'))
+        self.display.esc_signal.connect(self._clear)
         self.display.number_signal.connect(lambda: print('number'))
+        self.display.operator_signal.connect(lambda: print('operator'))
 
         for i, row in enumerate(self._grid_cal):
             for j, button_text in enumerate(row):

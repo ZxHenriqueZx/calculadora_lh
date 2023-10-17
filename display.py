@@ -8,6 +8,7 @@ class Display(QLineEdit):
     backspace_signal = Signal()
     esc_signal = Signal()
     number_signal = Signal()
+    operator_signal = Signal()
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -29,6 +30,7 @@ class Display(QLineEdit):
         is_enter = key in [KEYS.Key_Enter, KEYS.Key_Return, KEYS.Key_Equal]
         is_backspace = key in [KEYS.Key_Backspace, KEYS.Key_Delete]
         is_esc = key == KEYS.Key_Escape
+        is_operator = text in '/*-+p'
 
         if is_enter:
             self.enter_signal.emit()
@@ -42,11 +44,16 @@ class Display(QLineEdit):
             self.esc_signal.emit()
             return event.ignore()
 
+        if is_operator:
+            if text.lower() == 'p':
+                text = '^'
+            self.operator_signal.emit()
+            return event.ignore()
+
         if is_empyt(text):
             return event.ignore()
 
         if is_num_or_dot(text):
             self.number_signal.emit()
-            print(text)
             return event.ignore()
 
