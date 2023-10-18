@@ -105,6 +105,7 @@ class GridButtons(QGridLayout):
             return
 
         self.display.insert(text)
+        self.display.setFocus()
 
     def _clear(self):
         self._left = None
@@ -112,6 +113,7 @@ class GridButtons(QGridLayout):
         self._op = None
         self.equation = 'X ? X = X'
         self.display.clear()
+        self.display.setFocus()
 
     def _operator_clicked(self, text):
         display_text = self.display.text()
@@ -126,6 +128,7 @@ class GridButtons(QGridLayout):
 
         self._op = text
         self.equation = f'{self._left} {self._op} INSERT'
+        self.display.setFocus()
 
     def _equal(self):
         display_text = self.display.text()
@@ -154,6 +157,7 @@ class GridButtons(QGridLayout):
         self.info.setText(f'{self.equation} = {result}')
         self._left = result
         self._right = None
+        self.display.setFocus()
 
     def _show_error(self, msg):
         msg_box = self.window._make_msg_box()
