@@ -50,8 +50,8 @@ class GridButtons(QGridLayout):
         self.display.enter_signal.connect(self._equal)
         self.display.backspace_signal.connect(self.display.backspace)
         self.display.esc_signal.connect(self._clear)
-        self.display.number_signal.connect(lambda: print('number'))
-        self.display.operator_signal.connect(lambda: print('operator'))
+        self.display.number_signal.connect(self._insert_text)
+        self.display.operator_signal.connect(self._operator_clicked)
 
         for i, row in enumerate(self._grid_cal):
             for j, button_text in enumerate(row):
@@ -63,7 +63,7 @@ class GridButtons(QGridLayout):
 
 
                 self.addWidget(button, i, j)
-                button_slot = self._make_slot(self._insert_text, button)
+                button_slot = self._make_slot(self._insert_text, button_text)
                 self._connect_button_clicked(button, button_slot)
 
     def _config_special_button(self, button):
@@ -81,7 +81,7 @@ class GridButtons(QGridLayout):
         if text in '+-*/^':
             self._connect_button_clicked(
                 button,
-                self._make_slot(self._operator_clicked, button)
+                self._make_slot(self._operator_clicked, text)
             )
 
         if text == '=':
@@ -91,20 +91,20 @@ class GridButtons(QGridLayout):
         button.clicked.connect(slot)
 
     def _make_slot(self, func, *args, **kwargs):
-        @Slot()
+        @Slot(bool)
         def real_slot(_):
             func(*args, **kwargs)
         return real_slot
 
 
-    def _insert_text(self, button):
-        button_text = button.text()
-        new_display_value = self.display.text() + button_text
+    @Slot()
+    def _insert_text(self, text):
+        new_display_value = self.display.text() + text
 
         if not is_valid_number(new_display_value):
             return
 
-        self.display.insert(button_text)
+        self.display.insert(text)
 
     def _clear(self):
         self._left = None
@@ -113,8 +113,7 @@ class GridButtons(QGridLayout):
         self.equation = 'X ? X = X'
         self.display.clear()
 
-    def _operator_clicked(self, button):
-        button_text = button.text()
+    def _operator_clicked(self, text):
         display_text = self.display.text()
         self.display.clear()
 
@@ -125,7 +124,7 @@ class GridButtons(QGridLayout):
         if self._left is None:
             self._left = float(display_text)
 
-        self._op = button_text
+        self._op = text
         self.equation = f'{self._left} {self._op} INSERT'
 
     def _equal(self):
@@ -141,7 +140,7 @@ class GridButtons(QGridLayout):
 
         try:
             if self._op == '^':
-                result = math.pow(self._left, self._rigth)
+                result = math.pow(self._left, self._right)
             else:
                 result = eval(self.equation)
         except ZeroDivisionError:
