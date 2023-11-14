@@ -1,8 +1,8 @@
 import math
 from PySide6.QtWidgets import QPushButton, QGridLayout
 from PySide6.QtCore import Slot
-from variables import MID_SIZE, MAX_SIZE, MIN_SIZE
-from utils import is_valid_number
+from app.variables import MID_SIZE, MAX_SIZE, MIN_SIZE
+from app.utils import is_valid_number
 
 
 class Button(QPushButton):

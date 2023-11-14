@@ -1,11 +1,11 @@
 from PySide6.QtWidgets import QApplication, QLabel
 from PySide6.QtGui import QIcon
-from main_window import MyWindow
-from display import Display
-from variables import ICON_PATH
-from info import Info
-from theme import setup_theme_app
-from buttons import Button, GridButtons
+from app.main_window import MyWindow
+from app.display import Display
+from app.variables import ICON_PATH
+from app.info import Info
+from app.theme import setup_theme_app
+from app.buttons import Button, GridButtons
 
 
 if __name__ == '__main__':

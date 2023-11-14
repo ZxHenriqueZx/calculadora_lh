@@ -1,6 +1,6 @@
 from PySide6.QtWidgets import QLabel, QWidget
 from PySide6.QtCore import Qt
-from variables import MID_SIZE
+from app.variables import MID_SIZE
 
 class Info(QLabel):
     def __init__(self, text: str, parent: QWidget | None = None):

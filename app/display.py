@@ -1,7 +1,7 @@
 from PySide6.QtWidgets import QLineEdit
 from PySide6.QtCore import Qt, Signal
-from variables import MAX_SIZE, TEXT_MARGIN, MIN_WIDTH, MID_SIZE
-from utils import is_empyt, is_num_or_dot
+from app.variables import MAX_SIZE, TEXT_MARGIN, MIN_WIDTH, MID_SIZE
+from app.utils import is_empyt, is_num_or_dot
 
 class Display(QLineEdit):
     enter_signal = Signal()
